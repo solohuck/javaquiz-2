@@ -1,0 +1,220 @@
+*,::after,::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+    font-family: inherit
+  }
+
+:root{
+    --white-color: #fff;
+    --box-shawdow: 0 0 5px black;
+    /*add some good roots to have*/
+    --black-color: #000;
+    --grey-color: #ccc;
+    --primary-color: #f26a2e;
+    --secondary-color: #f0f0f0;
+    --dark-color: #333;
+    --light-color: #f4f4f4;
+    --font-light-color: #f4f4f4;
+    --font-dark-color: #333;
+    --font-primary-color: #f26a2e;
+    --font-secondary-color: #f0f0f0;
+    --font-size: 1.6rem;
+    --line-height: 1.5;
+    --transition: all .2s;
+    --border-radius: 2rem;
+    --max-width: 120rem;
+    --fixed-width: 65rem;
+}
+
+html {
+    font-size: 62.5%;
+    scroll-behavior: smooth
+}
+
+@media only screen and (max-width: 75em) {
+    html {
+        font-size:59%
+    }
+}
+  
+@media only screen and (max-width: 56.25em) {
+    html {
+        font-size:56%
+    }
+}
+  
+@media only screen and (min-width: 112.5em) {
+    html {
+        font-size:65%
+    }
+}
+
+body {
+    box-sizing: border-box;
+    position: relative;
+    line-height: 1.5;
+    font-family: sans-serif;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    font-family: 'Source Sans Pro',sans-serif
+}
+
+a {
+    text-decoration: none;
+    color: inherit
+}
+  
+li {
+    list-style: none
+}
+  
+a:focus,button:focus,input:focus,textarea:focus {
+    outline: 0
+}
+  
+button {
+    border: none;
+    cursor: pointer
+}
+  
+textarea {
+    resize: none
+}
+
+.btn {
+    /*make a button default class*/
+    display: inline-block;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 1rem 2rem;
+    border-radius: 2rem;
+    transition: all .2s;
+    cursor: pointer;
+    border: none;
+    background-color: var(--white-color);
+    box-shadow: var(--box-shawdow);
+    color: var(--black-color);
+  }
+  
+.btn:hover {
+    transform: translateY(-3px)
+}
+
+.header{
+    /*center the header section*/
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.header__container{
+    /* make it a box in the center of the page*/
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--white-color);
+    box-shadow: var(--box-shawdow);
+    border-radius: 10px;
+    padding: 2rem;
+    margin: 2rem;
+    max-width: 50rem;
+    max-height: 50rem;
+    background-image: url(../img/sj-objio-XFWiZTa2Ub0-unsplash.jpg); 
+    background-size: cover;
+}
+
+.header__main{
+    /*content center*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.header__title{ 
+    font-size: 3rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+.header__subtitle{
+    /*add a subtitle class*/
+    font-size: 1.5rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+.header--qt{
+    /*add a title to the top of the page*/
+    font-size: 3rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    color: var(--white-color);
+    /*title needs to be at the top of the page not center */
+    align-self: flex-start;
+    margin-left: 2rem;
+
+}
+
+.header__main--qt{
+
+}
+
+.header__container--qt{
+    width: 50rem;
+    height: 50rem;
+    box-shadow: var(--box-shawdow);
+    border-radius: 10px;
+    padding: 2rem;
+    margin: 2rem;
+    background-image: url(../img/sj-objio-XFWiZTa2Ub0-unsplash.jpg); 
+    background-size: cover;
+}
+
+.header__options{
+    /*add options class*/
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 5rem;
+    padding: 2rem;
+    margin: 2rem;
+}
+
+.header__option{
+    /*add a option class*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 5rem;
+    padding: 2rem;
+    margin: 2rem;
+    cursor: pointer;
+}
+
+
+
+
+
+.header__label{
+
+}
+
+
+
