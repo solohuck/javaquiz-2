@@ -9,26 +9,37 @@
 </head>
 <body>
     <header class="header">
+        <div class="timer__container">
+            <p class="timer__time" id="timer">BEGIN!</p>
+        </div>
+        <div class="header__main">
+            <h2 class="header__title" id="question">question goes here</h2>
+        </div>
         <div class="header__container--qt">
-            <div class="header__main">
-                <h2 class="header__title">question goes here</h1>
-            </div>
             <div class="header__options">
                 <div class="header__option">
                     <a href="#A" class="header__label btn" id="A">A</a>
+                    <p class="header__answer" id="answer__1"></p>
                 </div>
                 <div class="header__option">
                     <a href="#B" class="header__label btn" id="B">B</a>
+                    <p class="header__answer" id="answer__2"></p>
                 </div>
                 <div class="header__option">
                     <a href="#C" class="header__label btn" id="C">C</a>
+                    <p class="header__answer" id="answer__3"></p>
                 </div>
                 <div class="header__option">
                     <a href="#D" class="header__label btn" id="D">D</a>
+                    <p class="header__answer" id="answer__4"></p>
                 </div>
+            </div>
+            <div class="header__result">
+                <p id="result__message" id="score"></p>
             </div>
         </div>
     </header>
+    <script src="./js/script.js"></script>
 </body>
 </html>
 

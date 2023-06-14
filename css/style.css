@@ -111,7 +111,22 @@ textarea {
     justify-content: center;
     align-items: center;
 }
+.timer__container{
+    /*make a small box for time counter*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
+.timer__time{
+    /*make a time class*/
+    font-size: 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
 .header__container{
     /* make it a box in the center of the page*/
     width: 100%;
@@ -140,11 +155,13 @@ textarea {
 }
 
 .header__title{ 
-    font-size: 3rem;
+    font-size: 2rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 1rem;
+    width: 55rem;
+    text-align: center;
 }
 
 .header__subtitle{
@@ -156,24 +173,6 @@ textarea {
     margin-bottom: 1rem;
 }
 
-.header--qt{
-    /*add a title to the top of the page*/
-    font-size: 3rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 1rem;
-    color: var(--white-color);
-    /*title needs to be at the top of the page not center */
-    align-self: flex-start;
-    margin-left: 2rem;
-
-}
-
-.header__main--qt{
-
-}
-
 .header__container--qt{
     width: 50rem;
     height: 50rem;
@@ -183,38 +182,52 @@ textarea {
     margin: 2rem;
     background-image: url(../img/sj-objio-XFWiZTa2Ub0-unsplash.jpg); 
     background-size: cover;
-}
-
-.header__options{
-    /*add options class*/
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    height: 5rem;
-    padding: 2rem;
-    margin: 2rem;
-}
-
-.header__option{
-    /*add a option class*/
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    height: 5rem;
-    padding: 2rem;
-    margin: 2rem;
-    cursor: pointer;
+    align-items: center; /* Align answers towards the left */
 }
 
+.header__options{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align answers towards the left */
+}
 
-
-
+.header__option{
+    display: flex;
+    align-items: center;
+}
 
 .header__label{
+    margin: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.header__answer{
+    /*add an answer class*/
+    font-size: 1.5rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.header__result{
+    /*add a result class*/
+    font-size: 3rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
 
 }
+
+#result__message{
+    margin: 0;
+    line-height: 1;
+}
+
 
 
 
