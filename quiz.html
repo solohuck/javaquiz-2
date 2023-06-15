@@ -8,37 +8,30 @@
     <title>JavaQuiz</title>
 </head>
 <body>
-    <header class="header">
-        <div class="timer__container">
-            <p class="timer__time" id="timer">BEGIN!</p>
-        </div>
-        <div class="header__main">
-            <h2 class="header__title" id="question">question goes here</h2>
-        </div>
-        <div class="header__container--qt">
-            <div class="header__options">
-                <div class="header__option">
-                    <a href="#A" class="header__label btn" id="A">A</a>
-                    <p class="header__answer" id="answer__1"></p>
-                </div>
-                <div class="header__option">
-                    <a href="#B" class="header__label btn" id="B">B</a>
-                    <p class="header__answer" id="answer__2"></p>
-                </div>
-                <div class="header__option">
-                    <a href="#C" class="header__label btn" id="C">C</a>
-                    <p class="header__answer" id="answer__3"></p>
-                </div>
-                <div class="header__option">
-                    <a href="#D" class="header__label btn" id="D">D</a>
-                    <p class="header__answer" id="answer__4"></p>
-                </div>
+    <div class="start__screen">
+        <button id="start__btn">Start</button>
+    </div>
+    <div id="display__container">
+        <div id="header">
+            <div class="number__count">
+                <span class="question__count">1 of 4 questions</span>
             </div>
-            <div class="header__result">
-                <p id="result__message" id="score"></p>
+            <div class="timer__div">
+                <span class="time__left" id="timer">10s</span>
             </div>
         </div>
-    </header>
+        <div id="container">
+            <!--questions displayed here-->
+        </div>
+        <button id="next__btn">next</button>
+    </div>
+    <div class="score__container hide">
+        <div id="user__highscore">Demo High Score</div>
+        <div id="user__score">Demo Score</div>
+        <div id ="user__time">Demo Time</div>
+        <button id="restart">Restart</button>
+    </div>
+    <!---script--->
     <script src="./js/script.js"></script>
 </body>
 </html>
