@@ -1,233 +1,245 @@
 *,::after,::before {
     margin: 0;
     padding: 0;
-    box-sizing: inherit;
-    font-family: inherit
-  }
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
 
 :root{
-    --white-color: #fff;
-    --box-shawdow: 0 0 5px black;
-    /*add some good roots to have*/
-    --black-color: #000;
-    --grey-color: #ccc;
-    --primary-color: #f26a2e;
-    --secondary-color: #f0f0f0;
-    --dark-color: #333;
-    --light-color: #f4f4f4;
-    --font-light-color: #f4f4f4;
-    --font-dark-color: #333;
-    --font-primary-color: #f26a2e;
-    --font-secondary-color: #f0f0f0;
-    --font-size: 1.6rem;
-    --line-height: 1.5;
-    --transition: all .2s;
-    --border-radius: 2rem;
-    --max-width: 120rem;
-    --fixed-width: 65rem;
-}
-
-html {
-    font-size: 62.5%;
-    scroll-behavior: smooth
-}
-
-@media only screen and (max-width: 75em) {
-    html {
-        font-size:59%
-    }
-}
-  
-@media only screen and (max-width: 56.25em) {
-    html {
-        font-size:56%
-    }
-}
-  
-@media only screen and (min-width: 112.5em) {
-    html {
-        font-size:65%
-    }
+    --main-color: #f1c40f;
+    --secondary-color: grey;
+    --text-color: #fff;
+    --secondary-text-color: #000;
+    --border-bottom:grey;
+    --timer-color: #e74c3c;
+    --button-color: background-image: (url("../img/sj-objio-XFWiZTa2Ub0-unsplash.jpg"));
+    --correct-color: #689f38;
+    --incorrect-color: #d32f2f;
+    --incorrect-background-color: #ffdde0;
+    --correct-background-color: #e7f6d5;
+    --correct-answer-color: #ffd700;
+    --correct-answer-background-color: #f5ecbf;
 }
 
 body {
-    box-sizing: border-box;
-    position: relative;
-    line-height: 1.5;
-    font-family: sans-serif;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    font-family: 'Source Sans Pro',sans-serif
+    background-image: url("../img/copy-space-surrounded-by-office-supplies.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
+    overflow: hidden;
 }
 
-a {
-    text-decoration: none;
-    color: inherit
+.start__screen, 
+.score__container{
+    position: absolute;
+    top:0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
-  
-li {
-    list-style: none
-}
-  
-a:focus,button:focus,input:focus,textarea:focus {
-    outline: 0
-}
-  
+
 button {
     border: none;
-    cursor: pointer
-}
-  
-textarea {
-    resize: none
+    outline: none;
+    cursor: pointer;
+    /* Add other button styles */
+    transition: all 0.3s ease-in-out;
 }
 
-.btn {
-    /*make a button default class*/
-    display: inline-block;
-    text-transform: uppercase;
-    font-weight: 700;
-    letter-spacing: 1px;
-    padding: 1rem 2rem;
-    border-radius: 2rem;
-    transition: all .2s;
-    cursor: pointer;
-    border: none;
-    background-color: var(--white-color);
-    box-shadow: var(--box-shawdow);
-    color: var(--black-color);
-  }
+#start__btn,
+#restart {
+  font-size: 1.3em;
+  padding: 0.5em 1.8em;
+  border-radius: 0.2em;
+}
+
+button:hover {
+    box-shadow: 0 0.5em 0.5em rgba(0, 0, 0, 0.2);
+}
   
-.btn:hover {
-    transform: translateY(-3px)
+button:not(:hover) {
+    box-shadow: none;
+}
+  
+
+#restart {
+    margin-top: 0.9em;
+}
+
+#display__container {
+    background-image: url("../img/sj-objio-XFWiZTa2Ub0-unsplash.jpg");
+    background-size: cover;
+    padding: 3.1em 1.8em;
+    width: 80%;
+    max-width: 37.5em;
+    margin: 0 auto;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 0.6em;
 }
 
 .header{
-    /*center the header section*/
+    margin-bottom: 1.8em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.6em;
+    border-bottom: 0.1em solid var(--border-bottom);
+}
+
+.timer__div {
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.7em 1.8em;
+    margin-bottom: 1em;
+}
+
+.question {
+    margin-bottom: 1.25em;
+    font-weight: 600;
+}
+
+.question__count{
+    /*make it hug the top left corner*/
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0.7em 1.8em;
+    margin-top: .5em;
+}
+
+/*this is for javascript*/
+.option__div {
+    font-size: 0.9em;
     width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-.timer__container{
-    /*make a small box for time counter*/
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    padding: 1em;
+    margin: 0.3em 0;
+    text-align: left;
+    outline: none;
+    background: transparent;
+    border: 1px solid black;
+    border-radius: 0.3em;
 }
 
-.timer__time{
-    /*make a time class*/
-    font-size: 2rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 1rem;
-}
-.header__container{
-    /* make it a box in the center of the page*/
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--white-color);
-    box-shadow: var(--box-shawdow);
-    border-radius: 10px;
-    padding: 2rem;
-    margin: 2rem;
-    max-width: 50rem;
-    max-height: 50rem;
-    background-image: url(../img/sj-objio-XFWiZTa2Ub0-unsplash.jpg); 
-    background-size: cover;
+/*make the the last child in the .option__div have a bottom margin*/
+.option__div:last-child {
+    margin-bottom: 1em;
 }
 
-.header__main{
-    /*content center*/
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+/*this is for javascript*/
+.option__div:disabled {
+    color: var(--secondary-text-color);
 }
 
-.header__title{ 
-    font-size: 2rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 1rem;
-    width: 55rem;
-    text-align: center;
+#next__btn {
+    font-size: 1em;
+    margin-top:4em;
+    margin-right: 0.5em;
+    background: none;
+    color: var(--secondary-text-color);
+    float: right;
+    /*make it hug the right bottom corner*/
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 1em;
 }
 
-.header__subtitle{
-    /*add a subtitle class*/
-    font-size: 1.5rem;
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 1rem;
+/*make the next__btn class ignore the hover effect*/
+#next__btn:hover {
+    box-shadow: none;
+    color: var(--text-color);
 }
 
-.header__container--qt{
-    width: 50rem;
-    height: 50rem;
-    box-shadow: var(--box-shawdow);
-    border-radius: 10px;
-    padding: 2rem;
-    margin: 2rem;
-    background-image: url(../img/sj-objio-XFWiZTa2Ub0-unsplash.jpg); 
-    background-size: cover;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center; /* Align answers towards the left */
+.hide {
+    display: none;
 }
 
-.header__options{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* Align answers towards the left */
+/*This is for javaScript*/
+.incorrect {
+    background-color: var(--incorrect-background-color);
+    color: var(--incorrect-color);
+    border-color: var(--incorrect-color);
 }
 
-.header__option{
-    display: flex;
-    align-items: center;
+/*this is for javascript*/
+.correct {
+    background-color: var(--correct-background-color);
+    color: var(--correct-color);
+    border-color: var(--correct-color);
 }
 
-.header__label{
-    margin: 2rem;
-    display: flex;
-    align-items: center;
+.correct__answer {
+  /*Make this class like .correct but make it gold*/
+    background-color: var(--correct-answer-background-color);
+    color: var(--correct-answer-color);
+    border-color: var(--correct-answer-color);
 }
 
-.header__answer{
-    /*add an answer class*/
-    font-size: 1.5rem;
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+#user__score {
+    font-size: 1.5em;
+    color: var(--text-color);
+    margin-bottom: 0.5em;
 }
 
-.header__result{
-    /*add a result class*/
-    font-size: 3rem;
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 1rem;
-
+.clear {
+    filter: blur(0);
+}
+  
+.blurry {
+    filter: blur(1px);
 }
 
-#result__message{
-    margin: 0;
-    line-height: 1;
+#next__btn{
+    display: none;
 }
 
-
-
+#user__highscore{
+    /*put the text at the top of the page*/
+    position: absolute;
+    top: 0;
+    padding: 0.7em 1.8em;
+    margin-top: .5em;
+    /*Give the text a round border*/
+    border-radius: 0.3em;
+    /*Give the text a background color*/
+    background-color: var(--correct-background-color);
+    /*Give the text a color*/
+    color: var(--correct-color);
+    /*Give the text a border*/
+    border: 1px solid var(--correct-color);
+}
+  
+button.option__div {
+    /* Add other option styles */
+    transition: all 0.5s ease-in-out;
+}
+  
+button.option__div:hover {
+    box-shadow: 0 0.5em 0.5em rgba(0, 0, 0, 0.2);
+}
+  
+button.option__div.selected {
+    pointer-events: none;
+}
+  
+button.option__div.selected:hover {
+    box-shadow: none;
+}
+  
+button.option__div.selected-wrong {
+    pointer-events: none;
+}
+  
+button.option__div.selected-wrong:hover {
+    box-shadow: none;
+}
 
