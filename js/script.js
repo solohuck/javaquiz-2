@@ -21,6 +21,8 @@ let quizStartTime;
 let countdown;
 let streakCount;
 
+
+
 // Quiz array with questions, options, and correct answers
 const quizArray = [
   {
@@ -61,10 +63,18 @@ const restartQuiz = () => {
 restartBtn.addEventListener("click", restartQuiz);
 
 // Next button event listener
-const nextQuestion = () => {
+nextBtn.addEventListener("click", () => {
   questionCount++;
+  console.log(questionCount);
+  nextQuestion();
+  quizDisplay(questionCount);
+  nextBtn.style.display = "none";
+  timeLeft.textContent = "10s";
+});
 
-  if (questionCount >= quizArray.length) {
+const nextQuestion = () => {
+
+  if (questionCount === quizArray.length) {
     // Hide question container and display score
     displayContainer.classList.add("hide");
     scoreContainer.classList.remove("hide");
@@ -77,11 +87,11 @@ const nextQuestion = () => {
     userScore.textContent = `Score: ${scoreCount}/${quizArray.length} (${grade})`;
     userTime.textContent = `Time: ${timeCount}`;
     questionCount = 0;
+
   } else {
     countOfQuestion.textContent = `${questionCount + 1} of ${quizArray.length} Questions`;
 
-    quizDisplay(questionCount);
-    count = 11;
+    count = 10;
     clearInterval(countdown);
     timerDisplay();
   }
@@ -185,6 +195,9 @@ const checker = (userOption) => {
   });
 
   const answerControl = () => {
+
+    nextBtn.style.display = "block";
+
     if (userSolution === quizArray[questionCount].correct) {
       userOption.classList.add("selected", "correct");
       scoreCount++;
@@ -215,27 +228,10 @@ const checker = (userOption) => {
     element.disabled = true;
   });
 
-  const optionSelected = Array.from(options).some((option) =>
-    option.classList.contains("selected")
-  );
 
-  if (optionSelected) {
-    nextBtn.style.display = "block";
-  } else {
-    nextBtn.style.display = "none";
-  }
 
-  
   clearInterval(countdown);
   answerControl();
-
-  nextBtn.style.display = "block";
-
-  nextBtn.addEventListener("click", () => {
-    nextBtn.style.display = "none";
-    nextQuestion();
-    questionCount++;
-  });
 };
 
 // Initial setup function
@@ -244,6 +240,7 @@ const initial = () => {
   questionCount = 0;
   scoreCount = 0;
   count = 10;
+  timeLeft.textContent = "10s";
   streakCount = 0;
   quizStartTime = Date.now();
   clearInterval(countdown);
@@ -273,6 +270,7 @@ const calculateGrade = (scoreCount) => {
 
 // Calculate user streak
 const calculateStreak = (streakCount) => {
+
   if (streakCount > 1 && streakCount % 2 === 0) {
     if (streakCount <= 3) {
       return "Heating Up";
