@@ -86,6 +86,25 @@ button:not(:hover) {
     border-radius: 0.6em;
 }
 
+/*Change the size of the #display__container depending on the screen size*/
+@media screen and (max-width: 600px) {
+    #display__container {
+        padding: 1.8em;
+        max-width: 30em;
+        max-height: 30em;
+        height: 100%;
+        width: 100%;
+        margin: 0 auto;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        top: 50%;
+        left: 50%;
+        border-radius: 0.6em;
+    }
+}
+
+
+
 .header{
     margin-bottom: 1.8em;
     display: flex;
@@ -104,6 +123,13 @@ button:not(:hover) {
     font-size: var(--font-size);   
 }
 
+/*Change the font size depending on the screen size*/
+@media screen and (max-width: 600px) {
+    .timer__div {
+        font-size: 1em;
+    }
+}
+
 .question {
     margin-bottom: 1.25em;
     margin-top: 4.5em;
@@ -112,7 +138,16 @@ button:not(:hover) {
     align-items: center;
     justify-content: center;
     display: flex;
-    margin: 2.5em;
+    text-align: center;
+    margin: 1em;
+    padding: 1em;
+}
+
+/*Change the font size depending on the screen size*/
+@media screen and (max-width: 600px) {
+    .question {
+        font-size: 1em;
+    }
 }
 
 .question__count{
@@ -122,6 +157,13 @@ button:not(:hover) {
     padding: 0.7em 1.8em;
     margin-top: .5em;
     font-size: var(--font-size);
+}
+
+/*Change the font size depending on the screen size*/
+@media screen and (max-width: 600px) {
+    .question__count {
+        font-size: 1em;
+    }
 }
 
 
@@ -137,6 +179,13 @@ button:not(:hover) {
     border-radius: 0.3em;
     font-size: 1em;
     transition: all 0.3s ease-in-out;
+}
+
+/*Change the font size depending on the screen size*/
+@media screen and (max-width: 600px) {
+    .option__div {
+        font-size: .8em;
+    }
 }
 
 
@@ -161,6 +210,13 @@ button:not(:hover) {
     right: 0;
     padding: 1em;
     font-size: var(--font-size);
+}
+
+/*Change the font size depending on the screen size*/
+@media screen and (max-width: 600px) {
+    #next__btn {
+        font-size: 1em;
+    }
 }
 
 

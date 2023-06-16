@@ -313,8 +313,8 @@ startBtn.addEventListener("click", () => {
 
 // Hide quiz and display start screen on page load
 window.onload = () => {
-  startScreen.classList.remove("hide");
   displayContainer.classList.add("hide");
+  startScreen.classList.remove("hide");
 };
 
 
