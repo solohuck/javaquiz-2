@@ -19,6 +19,7 @@
     --correct-background-color: #e7f6d5;
     --correct-answer-color: #ffd700;
     --correct-answer-background-color: #f5ecbf;
+    --font-size: 1.3em;
 }
 
 body {
@@ -46,7 +47,6 @@ button {
     border: none;
     outline: none;
     cursor: pointer;
-    /* Add other button styles */
     transition: all 0.3s ease-in-out;
 }
 
@@ -74,8 +74,10 @@ button:not(:hover) {
     background-image: url("../img/sj-objio-XFWiZTa2Ub0-unsplash.jpg");
     background-size: cover;
     padding: 3.1em 1.8em;
-    width: 80%;
-    max-width: 37.5em;
+    max-width: 50em;
+    max-height: 50em;
+    height: 100%;
+    width: 100%;
     margin: 0 auto;
     position: absolute;
     transform: translate(-50%, -50%);
@@ -94,47 +96,55 @@ button:not(:hover) {
 }
 
 .timer__div {
-    background: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: absolute;
+    top: 0;
+    right: 0;
     padding: 0.7em 1.8em;
-    margin-bottom: 1em;
+    margin-top: .5em;
+    font-size: var(--font-size);   
 }
 
 .question {
     margin-bottom: 1.25em;
+    margin-top: 4.5em;
     font-weight: 600;
+    font-size: var(--font-size);
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin: 2.5em;
 }
 
 .question__count{
-    /*make it hug the top left corner*/
     position: absolute;
     top: 0;
     left: 0;
     padding: 0.7em 1.8em;
     margin-top: .5em;
+    font-size: var(--font-size);
 }
 
-/*this is for javascript*/
+
 .option__div {
-    font-size: 0.9em;
     width: 100%;
+    height: 4em;
     padding: 1em;
-    margin: 0.3em 0;
+    margin: 0.5em 0;
     text-align: left;
     outline: none;
     background: transparent;
     border: 1px solid black;
     border-radius: 0.3em;
+    font-size: 1em;
+    transition: all 0.3s ease-in-out;
 }
 
-/*make the the last child in the .option__div have a bottom margin*/
+
 .option__div:last-child {
     margin-bottom: 1em;
 }
 
-/*this is for javascript*/
+
 .option__div:disabled {
     color: var(--secondary-text-color);
 }
@@ -146,14 +156,14 @@ button:not(:hover) {
     background: none;
     color: var(--secondary-text-color);
     float: right;
-    /*make it hug the right bottom corner*/
     position: absolute;
     bottom: 0;
     right: 0;
     padding: 1em;
+    font-size: var(--font-size);
 }
 
-/*make the next__btn class ignore the hover effect*/
+
 #next__btn:hover {
     box-shadow: none;
     color: var(--text-color);
@@ -163,24 +173,23 @@ button:not(:hover) {
     display: none;
 }
 
-/*This is for javaScript*/
+
 .incorrect {
     background-color: var(--incorrect-background-color);
-    color: var(--incorrect-color);
+    color: var(--secondary-text-color);
     border-color: var(--incorrect-color);
 }
 
-/*this is for javascript*/
+/*Add transition from option__div to .correct*/
 .correct {
     background-color: var(--correct-background-color);
-    color: var(--correct-color);
+    color: var(--secondary-text-color);
     border-color: var(--correct-color);
 }
-
+  
 .correct__answer {
-  /*Make this class like .correct but make it gold*/
     background-color: var(--correct-answer-background-color);
-    color: var(--correct-answer-color);
+    color: var(--secondary-text-color);
     border-color: var(--correct-answer-color);
 }
 
@@ -203,23 +212,17 @@ button:not(:hover) {
 }
 
 #user__highscore{
-    /*put the text at the top of the page*/
     position: absolute;
     top: 0;
     padding: 0.7em 1.8em;
     margin-top: .5em;
-    /*Give the text a round border*/
     border-radius: 0.3em;
-    /*Give the text a background color*/
     background-color: var(--correct-background-color);
-    /*Give the text a color*/
     color: var(--correct-color);
-    /*Give the text a border*/
     border: 1px solid var(--correct-color);
 }
   
 button.option__div {
-    /* Add other option styles */
     transition: all 0.5s ease-in-out;
 }
   
@@ -242,4 +245,13 @@ button.option__div.selected-wrong {
 button.option__div.selected-wrong:hover {
     box-shadow: none;
 }
+
+#user__streak{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5em;
+    font-size: 1.5em;
+}
+
 

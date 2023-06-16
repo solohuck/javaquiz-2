@@ -11,124 +11,164 @@ const startScreen = document.querySelector(".start__screen");
 const startBtn = document.getElementById("start__btn");
 const userTime = document.getElementById("user__time");
 const userHighScore = document.getElementById("user__highscore");
+const userStreak = document.getElementById("user__streak");
 
 // Quiz variables
 let questionCount;
-let scoreCount = 0;
-let count = 11;
+let scoreCount;
+let count;
 let quizStartTime;
 let countdown;
+let streakCount;
 
 // Quiz array with questions, options, and correct answers
 const quizArray = [
   {
-    id: 1,
-    question: "What is the time complexity of the following code snippet?",
-    options: ["O(n)", "O(n^2)", "O(n^3)", "O(n^4)"],
-    correct: "O(n^2)"
+    question: "What is the correct syntax to declare a JavaScript variable?",
+    options: ["var myVariable;", "variable myVariable;", "v myVariable;", "let myVariable;"],
+    correct: "var myVariable;"
   },
-  // Add more questions here...
+  {
+    question: "What is the result of the following expression: '2' + 2?",
+    options: ["22", "4", "NaN", "Error"],
+    correct: "22"
+  },
+  {
+    question: "What is the scope of a variable declared with the 'let' keyword?",
+    options: ["Global scope", "Function scope", "Block scope", "Local scope"],
+    correct: "Block scope"
+  },
+  {
+    question: "What does the '=== operator' do in JavaScript?",
+    options: ["Compares the values and types of two variables", "Assigns a value to a variable", "Checks if two variables are equal", "None of the above"],
+    correct: "Compares the values and types of two variables"
+  },
+  {
+    question: "What is the purpose of the 'typeof' operator in JavaScript?",
+    options: ["Returns the type of a variable", "Checks if a variable is defined", "Converts a value to a boolean", "Performs a mathematical operation"],
+    correct: "Returns the type of a variable"
+  }
 ];
 
 // Restart quiz
-restartBtn.addEventListener("click", () => {
+const restartQuiz = () => {
   initial();
   displayContainer.classList.remove("hide");
   scoreContainer.classList.add("hide");
-});
+};
+
+// restartBtn event listener
+restartBtn.addEventListener("click", restartQuiz);
 
 // Next button event listener
-nextBtn.addEventListener("click", () => {
-  questionCount += 1;
+const nextQuestion = () => {
+  questionCount++;
 
-  if (questionCount === quizArray.length) {
+  if (questionCount >= quizArray.length) {
     // Hide question container and display score
     displayContainer.classList.add("hide");
     scoreContainer.classList.remove("hide");
 
-    // Calculate user score
+    // Calculate user score, grade, and time
     const grade = calculateGrade(scoreCount);
-    const timeResultCount = calculateTimeResult();
+    const timeCount = calculateTimeResult();
 
-    userHighScore.innerHTML = `High Score: ${grade}`;
-    userScore.innerHTML = `Score: ${grade}`;
-    userTime.innerHTML = `Time: ${timeResultCount} seconds`;
+    userHighScore.textContent = `High Score: ${grade}`;
+    userScore.textContent = `Score: ${scoreCount}/${quizArray.length} (${grade})`;
+    userTime.textContent = `Time: ${timeCount}`;
+    questionCount = 0;
   } else {
-    countOfQuestion.innerHTML = `${questionCount + 1} of ${quizArray.length} Question`;
+    countOfQuestion.textContent = `${questionCount + 1} of ${quizArray.length} Questions`;
+
     quizDisplay(questionCount);
     count = 11;
     clearInterval(countdown);
     timerDisplay();
   }
-});
+};
+
 
 // Timer display function
 const timerDisplay = () => {
   countdown = setInterval(() => {
     count--;
-    timeLeft.innerHTML = `${count}s`;
+    timeLeft.textContent = `${count}s`;
+
     if (count === 0) {
       clearInterval(countdown);
-      nextBtn.click();
+      handleTimeout();
+      userStreak.textContent = "";
     }
   }, 1000);
 };
 
-// Function to get the user's best score from local storage
-const getHighScore = () => {
-  const highScore = localStorage.getItem("highScore");
-  if (highScore) {
-    userHighScore.innerHTML = `High Score: ${highScore}`;
-  } else {
-    userHighScore.innerHTML = `High Score: 0`;
-  }
-};
+// Handle timeout when no option is selected
+const handleTimeout = () => {
+  const question = document.getElementsByClassName("container__mid")[questionCount];
 
-// Function to set the user's best score in local storage
-const setHighScore = (score) => {
-  const highScore = localStorage.getItem("highScore");
-  if (highScore) {
-    if (score > highScore) {
-      localStorage.setItem("highScore", score);
-    }
-  } else {
-    localStorage.setItem("highScore", score);
-  }
-};
+  if (question) {
+    const options = question.querySelectorAll(".option__div");
 
+    options.forEach((option) => {
+      option.classList.remove("selected", "blurry", "correct", "incorrect", "selected-wrong");
+    });
+
+    options.forEach((option) => {
+      if (option.innerText === quizArray[questionCount].correct) {
+        option.classList.add("clear", "correct__answer", "selected-wrong");
+      } else {
+        option.classList.add("blurry", "selected-wrong");
+      }
+    });
+  }
+
+  streakCount = 0;
+  nextBtn.style.display = "block";
+
+  clearInterval(countdown);
+  userStreak.textContent = `${calculateStreak(streakCount)}`;
+};
 
 // Quiz display function
 const quizDisplay = (questionCount) => {
   const quizCards = document.querySelectorAll(".container__mid");
-  quizCards.forEach((card) => {
-    card.classList.add("hide");
-  });
-  quizCards[questionCount].classList.remove("hide");
+
+  if (quizCards.length > 0) {
+    quizCards.forEach((card) => {
+      card.classList.add("hide");
+    });
+
+     if (quizCards[questionCount]) {
+      quizCards[questionCount].classList.remove("hide");
+    }
+  }
 };
 
 // Quiz creation function
 const quizCreator = () => {
   quizArray.sort(() => Math.random() - 0.5);
 
-  for (const question of quizArray) {
+  for (let i = 0; i < quizArray.length; i++) {
+    const question = quizArray[i];
     question.options.sort(() => Math.random() - 0.5);
 
     const div = document.createElement("div");
     div.classList.add("container__mid", "hide");
 
-    countOfQuestion.innerHTML = `1 of ${quizArray.length} Question`;
+    countOfQuestion.textContent = `1 of ${quizArray.length} Question`;
 
     const questionDIV = document.createElement("p");
     questionDIV.classList.add("question");
-    questionDIV.innerHTML = question.question;
+    questionDIV.textContent = question.question;
     div.appendChild(questionDIV);
 
-    div.innerHTML += `
-      <button class="option__div" onclick="checker(this)">${question.options[0]}</button>
-      <button class="option__div" onclick="checker(this)">${question.options[1]}</button>
-      <button class="option__div" onclick="checker(this)">${question.options[2]}</button>
-      <button class="option__div" onclick="checker(this)">${question.options[3]}</button>
-    `;
+    question.options.forEach((option) => {
+      const optionButton = document.createElement("button");
+      optionButton.classList.add("option__div");
+      optionButton.textContent = option;
+      optionButton.addEventListener("click", () => checker(optionButton));
+      div.appendChild(optionButton);
+    });
 
     quizContainer.appendChild(div);
   }
@@ -136,34 +176,40 @@ const quizCreator = () => {
 
 // Checker function
 const checker = (userOption) => {
-  const userSolution = userOption.innerText;
+  const userSolution = userOption.textContent;
   const question = document.getElementsByClassName("container__mid")[questionCount];
   const options = question.querySelectorAll(".option__div");
 
   options.forEach((option) => {
-  option.classList.remove("selected", "blurry", "correct", "incorrect", "selected-wrong");
-});
+    option.classList.remove("selected", "blurry", "correct", "incorrect", "selected-wrong");
+  });
 
-  if (userSolution === quizArray[questionCount].correct) {
-  userOption.classList.add("selected", "clear", "correct");
-  scoreCount += 1;
+  const answerControl = () => {
+    if (userSolution === quizArray[questionCount].correct) {
+      userOption.classList.add("selected", "correct");
+      scoreCount++;
+      streakCount++;
 
-  options.forEach((option) => {
-    if (option.innerText !== quizArray[questionCount].correct) {
-      option.classList.add("blurry", "selected-wrong");
-  }
-}); 
-  } else {
-  userOption.classList.add("incorrect", "selected");
+      userStreak.textContent = `${calculateStreak(streakCount)}`;
 
-  options.forEach((option) => {
-    if (option.innerText === quizArray[questionCount].correct) {
-      option.classList.add("clear", "correct__answer", "selected-wrong");
+      options.forEach((option) => {
+        if (option.textContent !== quizArray[questionCount].correct) {
+          option.classList.add("blurry", "selected-wrong");
+        }
+      });
     } else {
-      option.classList.add("blurry", "selected-wrong");
+      streakCount = 0;
+      userOption.classList.add("incorrect", "selected");
+
+      options.forEach((option) => {
+        if (option.textContent === quizArray[questionCount].correct) {
+          option.classList.add("correct", "selected-wrong");
+        } else {
+          option.classList.add("blurry", "selected-wrong");
+        }
+      });
     }
-});
-  } 
+  };
 
   options.forEach((element) => {
     element.disabled = true;
@@ -179,60 +225,98 @@ const checker = (userOption) => {
     nextBtn.style.display = "none";
   }
 
+  
+  clearInterval(countdown);
+  answerControl();
+
+  nextBtn.style.display = "block";
+
   nextBtn.addEventListener("click", () => {
     nextBtn.style.display = "none";
+    nextQuestion();
+    questionCount++;
   });
-
-  clearInterval(countdown);
 };
 
 // Initial setup function
 const initial = () => {
-quizContainer.innerHTML = "";
-questionCount = 0;
-scoreCount = 0;
-count = 11;
-quizStartTime = Date.now();
-clearInterval(countdown);
-timerDisplay();
-quizCreator();
-quizDisplay(questionCount);
+  quizContainer.innerHTML = "";
+  questionCount = 0;
+  scoreCount = 0;
+  count = 10;
+  streakCount = 0;
+  quizStartTime = Date.now();
+  clearInterval(countdown);
+  timerDisplay();
+  quizCreator();
+  quizDisplay(questionCount);
 };
 
 // Calculate user grade based on score
 const calculateGrade = (scoreCount) => {
-if (scoreCount === quizArray.length) {
-return "A+";
-} else if (scoreCount / quizArray.length >= 0.9) {
-return "A";
-} else if (scoreCount / quizArray.length >= 0.8) {
-return "B";
-} else if (scoreCount / quizArray.length >= 0.7) {
-return "C";
-} else if (scoreCount / quizArray.length >= 0.6) {
-return "D";
-} else {
-return "F";
-}
+  const percentage = (scoreCount / quizArray.length) * 100;
+
+  if (percentage >= 90) {
+    return "A+";
+  } else if (percentage >= 80) {
+    return "A";
+  } else if (percentage >= 70) {
+    return "B";
+  } else if (percentage >= 60) {
+    return "C";
+  } else if (percentage >= 50) {
+    return "D";
+  } else {
+    return "F";
+  }
 };
+
+// Calculate user streak
+const calculateStreak = (streakCount) => {
+  if (streakCount > 1 && streakCount % 2 === 0) {
+    if (streakCount <= 3) {
+      return "Heating Up";
+    } else if (streakCount <= 5) {
+      return "On Fire";
+    } else if (streakCount <= 7) {
+      return "Super Hot";
+    } else if (streakCount <= 9) {
+      return "Inferno";
+    } else if (streakCount < 10) {
+      return "Godlike";
+    } else if (streakCount === 10) {
+      return "Ultra Instinct";
+    }
+  }
+  return "";
+};
+
 
 // Calculate user time
 const calculateTimeResult = () => {
-const quizEndTime = Date.now();
-const totalTime = Math.floor((quizEndTime - quizStartTime) / 1000);
-return totalTime;
+  const quizEndTime = Date.now();
+  const totalTime = Math.floor((quizEndTime - quizStartTime) / 1000);
+
+  if (totalTime > 60) {
+    const minutes = Math.floor(totalTime / 60);
+    const seconds = totalTime % 60;
+    return `${minutes} minutes and ${seconds} seconds`;
+  } else {
+    return `${totalTime} seconds`;
+  }
 };
 
 // Event listener for start button
 startBtn.addEventListener("click", () => {
-startScreen.classList.add("hide");
-displayContainer.classList.remove("hide");
-initial();
+  startScreen.classList.add("hide");
+  displayContainer.classList.remove("hide");
+  initial();
 });
 
 // Hide quiz and display start screen on page load
 window.onload = () => {
-startScreen.classList.remove("hide");
-displayContainer.classList.add("hide");
-}
+  startScreen.classList.remove("hide");
+  displayContainer.classList.add("hide");
+};
+
 
