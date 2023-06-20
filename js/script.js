@@ -21,8 +21,6 @@ let quizStartTime;
 let countdown;
 let streakCount;
 
-
-
 // Quiz array with questions, options, and correct answers
 const quizArray = [
   {
@@ -60,17 +58,33 @@ const restartQuiz = () => {
 };
 
 // restartBtn event listener
-restartBtn.addEventListener("click", restartQuiz);
+restartBtn.addEventListener("click", () => {
+  restartQuiz();
+  userStreak.textContent = "";
+  userStreak = 0;
+});
 
 // Next button event listener
 nextBtn.addEventListener("click", () => {
   questionCount++;
-  console.log(questionCount);
   nextQuestion();
   quizDisplay(questionCount);
   nextBtn.style.display = "none";
   timeLeft.textContent = "10s";
 });
+
+// display the streak count only for a few seconds after a streak mark has been met
+const streakDisplay = () => {
+
+  userStreak.textContent = `${calculateStreak(streakCount)}`;
+  userStreak.classList.remove("hide", "fadeOut")
+  userStreak.classList.add("enlarge")
+
+  setTimeout(() => {
+    userStreak.classList.remove("enlarge")
+    userStreak.classList.add("hide", "fadeOut")
+  }, 2000);
+};
 
 const nextQuestion = () => {
 
@@ -89,6 +103,7 @@ const nextQuestion = () => {
     questionCount = 0;
 
   } else {
+
     countOfQuestion.textContent = `${questionCount + 1} of ${quizArray.length} Questions`;
 
     count = 10;
@@ -96,7 +111,6 @@ const nextQuestion = () => {
     timerDisplay();
   }
 };
-
 
 // Timer display function
 const timerDisplay = () => {
@@ -107,7 +121,7 @@ const timerDisplay = () => {
     if (count === 0) {
       clearInterval(countdown);
       handleTimeout();
-      userStreak.textContent = "";
+      userStreak.classList.add("hide")
     }
   }, 1000);
 };
@@ -136,7 +150,6 @@ const handleTimeout = () => {
   nextBtn.style.display = "block";
 
   clearInterval(countdown);
-  userStreak.textContent = `${calculateStreak(streakCount)}`;
 };
 
 // Quiz display function
@@ -178,6 +191,7 @@ const quizCreator = () => {
       optionButton.textContent = option;
       optionButton.addEventListener("click", () => checker(optionButton));
       div.appendChild(optionButton);
+      
     });
 
     quizContainer.appendChild(div);
@@ -203,7 +217,7 @@ const checker = (userOption) => {
       scoreCount++;
       streakCount++;
 
-      userStreak.textContent = `${calculateStreak(streakCount)}`;
+      streakDisplay();
 
       options.forEach((option) => {
         if (option.textContent !== quizArray[questionCount].correct) {
@@ -289,7 +303,6 @@ const calculateStreak = (streakCount) => {
   return "";
 };
 
-
 // Calculate user time
 const calculateTimeResult = () => {
   const quizEndTime = Date.now();
@@ -313,8 +326,8 @@ startBtn.addEventListener("click", () => {
 
 // Hide quiz and display start screen on page load
 window.onload = () => {
-  startScreen.classList.remove("hide");
   displayContainer.classList.add("hide");
+  startScreen.classList.remove("hide");
 };
 
 
