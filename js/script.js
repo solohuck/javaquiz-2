@@ -22,33 +22,100 @@ let countdown;
 let streakCount;
 
 // Quiz array with questions, options, and correct answers
-const quizArray = [
-  {
-    question: "What is the correct syntax to declare a JavaScript variable?",
-    options: ["var myVariable;", "variable myVariable;", "v myVariable;", "let myVariable;"],
-    correct: "var myVariable;"
-  },
-  {
-    question: "What is the result of the following expression: '2' + 2?",
-    options: ["22", "4", "NaN", "Error"],
-    correct: "22"
-  },
-  {
-    question: "What is the scope of a variable declared with the 'let' keyword?",
-    options: ["Global scope", "Function scope", "Block scope", "Local scope"],
-    correct: "Block scope"
-  },
-  {
-    question: "What does the '=== operator' do in JavaScript?",
-    options: ["Compares the values and types of two variables", "Assigns a value to a variable", "Checks if two variables are equal", "None of the above"],
-    correct: "Compares the values and types of two variables"
-  },
-  {
-    question: "What is the purpose of the 'typeof' operator in JavaScript?",
-    options: ["Returns the type of a variable", "Checks if a variable is defined", "Converts a value to a boolean", "Performs a mathematical operation"],
-    correct: "Returns the type of a variable"
+
+
+
+
+// Quiz array with dynamically generated questions, options, and correct answers
+const quizArray = [];
+
+// Function to generate random mental math questions
+function generateQuestions(numQuestions) {
+  const operations = ['*', '/', '+', '-']; // Array of operations
+
+  for (let i = 0; i < numQuestions; i++) {
+    const operation = operations[Math.floor(Math.random() * operations.length)]; // Random operation
+    let num1, num2, correctAnswer;
+
+    // Generate numbers based on the operation
+    switch (operation) {
+      case '*': // Multiplication
+        num1 = Math.floor(Math.random() * 10) + 1; // Random number between 1 and 10
+        num2 = Math.floor(Math.random() * 10) + 1; // Random number between 1 and 10
+        correctAnswer = num1 * num2; // Compute the correct answer
+        break;
+      case '/': // Division
+        correctAnswer = Math.floor(Math.random() * 10) + 1; // Random number between 1 and 10
+        num2 = Math.floor(Math.random() * 10) + 1; // Random number between 1 and 10
+        num1 = correctAnswer * num2; // Compute num1 based on the correct answer
+        break;
+      case '+': // Addition
+        num1 = Math.floor(Math.random() * 100) + 1; // Random number between 1 and 100
+        num2 = Math.floor(Math.random() * 100) + 1; // Random number between 1 and 100
+        correctAnswer = num1 + num2; // Compute the correct answer
+        break;
+      case '-': // Subtraction
+        num1 = Math.floor(Math.random() * 100) + 1; // Random number between 1 and 100
+        num2 = Math.floor(Math.random() * num1) + 1; // Random number between 1 and num1
+        correctAnswer = num1 - num2; // Compute the correct answer
+        break;
+    }
+
+    // Function to generate random choices for the question
+function generateChoices(correctAnswer) {
+  const choices = [correctAnswer.toString()]; // Array to store choices
+  const numChoices = 4; // Number of choices (including the correct answer)
+
+  while (choices.length < numChoices) {
+    const randomNum = Math.floor(Math.random() * 100) + 1; // Generate a random number
+
+    // Add the random number to choices if it's not already included
+    if (!choices.includes(randomNum.toString())) {
+      choices.push(randomNum.toString());
+    }
   }
-];
+
+  // Shuffle the choices array to randomize the order
+  shuffleArray(choices);
+
+  return choices;
+}
+
+// Function to shuffle an array using Fisher-Yates algorithm
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+// Call the function to generate random choices for each question
+for (let i = 0; i < quizArray.length; i++) {
+  quizArray[i].options = generateChoices(parseInt(quizArray[i].correct));
+}
+
+
+    const question = `What is ${num1} ${operation} ${num2}?`;
+    const choices = generateChoices(correctAnswer);
+
+    const questionObj = {
+      question: question,
+      options: choices,
+      correct: correctAnswer.toString(),
+    };
+
+    quizArray.push(questionObj);
+  }
+}
+
+// Call the function to generate 5 random questions
+generateQuestions(5);
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 // Restart quiz
 const restartQuiz = () => {
@@ -61,7 +128,6 @@ const restartQuiz = () => {
 restartBtn.addEventListener("click", () => {
   restartQuiz();
   userStreak.textContent = "";
-  userStreak = 0;
 });
 
 // Next button event listener
