@@ -20,10 +20,7 @@ let count;
 let quizStartTime;
 let countdown;
 let streakCount;
-
-// Quiz array with questions, options, and correct answers
-
-
+let healthCount = 3;
 
 
 // Quiz array with dynamically generated questions, options, and correct answers
@@ -115,7 +112,17 @@ generateQuestions(5);
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-
+// if a question is incorret then the health count will decrease by 1
+const health = () => {
+  console.log("health");
+  if (healthCount === 2) {
+    document.getElementById("health3").style.display = "none";
+  } else if (healthCount === 1) {
+    document.getElementById("health2").style.display = "none";
+  } else if (healthCount === 0) {
+    document.getElementById("health1").style.display = "none";
+  }
+};
 
 // Restart quiz
 const restartQuiz = () => {
@@ -170,7 +177,7 @@ const nextQuestion = () => {
 
   } else {
 
-    countOfQuestion.textContent = `${questionCount + 1} of ${quizArray.length} Questions`;
+    // countOfQuestion.textContent = `${questionCount + 1} of ${quizArray.length} Questions`;
 
     count = 10;
     clearInterval(countdown);
@@ -244,7 +251,7 @@ const quizCreator = () => {
     const div = document.createElement("div");
     div.classList.add("container__mid", "hide");
 
-    countOfQuestion.textContent = `1 of ${quizArray.length} Question`;
+    // countOfQuestion.textContent = `1 of ${quizArray.length} Question`;
 
     const questionDIV = document.createElement("p");
     questionDIV.classList.add("question");
@@ -292,6 +299,7 @@ const checker = (userOption) => {
       });
     } else {
       streakCount = 0;
+      healthCount--;
       userOption.classList.add("incorrect", "selected");
 
       options.forEach((option) => {
@@ -302,6 +310,7 @@ const checker = (userOption) => {
         }
       });
     }
+   
   };
 
   options.forEach((element) => {
