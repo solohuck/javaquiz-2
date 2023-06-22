@@ -150,13 +150,12 @@ button:not(:hover) {
     }
 }
 
-.question__count{
+.health__count{
     position: absolute;
     top: 0;
     left: 0;
     padding: 0.7em 1.8em;
     margin-top: .5em;
-    font-size: var(--font-size);
 }
 
 /*Change the font size depending on the screen size*/
@@ -323,6 +322,11 @@ button.option__div.selected-wrong:hover {
         font-size: 1em;
         margin: 2em;
     }
+}
+
+.heart{
+    width: 1.5em;
+    height: 1.5em;
 }
 
 
