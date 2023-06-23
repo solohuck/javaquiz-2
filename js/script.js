@@ -20,7 +20,7 @@ let count;
 let quizStartTime;
 let countdown;
 let streakCount;
-let healthCount = 3;
+let healthCount;
 
 
 // Quiz array with dynamically generated questions, options, and correct answers
@@ -108,19 +108,14 @@ for (let i = 0; i < quizArray.length; i++) {
 // Call the function to generate 5 random questions
 generateQuestions(5);
 
-
-
-//////////////////////////////////////////////////////////////////////////////////////////
-
 // if a question is incorret then the health count will decrease by 1
-const health = () => {
-  console.log("health");
+const UpdateHealth = () => {
   if (healthCount === 2) {
-    document.getElementById("health3").style.display = "none";
+    document.getElementById("heart1").style.display = "none";
   } else if (healthCount === 1) {
-    document.getElementById("health2").style.display = "none";
+    document.getElementById("heart2").style.display = "none";
   } else if (healthCount === 0) {
-    document.getElementById("health1").style.display = "none";
+    document.getElementById("heart3").style.display = "none";
   }
 };
 
@@ -300,6 +295,7 @@ const checker = (userOption) => {
     } else {
       streakCount = 0;
       healthCount--;
+      UpdateHealth();
       userOption.classList.add("incorrect", "selected");
 
       options.forEach((option) => {
@@ -332,6 +328,7 @@ const initial = () => {
   timeLeft.textContent = "10s";
   streakCount = 0;
   quizStartTime = Date.now();
+  healthCount = 3;
   clearInterval(countdown);
   timerDisplay();
   quizCreator();
