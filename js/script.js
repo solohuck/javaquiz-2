@@ -21,6 +21,9 @@ let quizStartTime;
 let countdown;
 let streakCount;
 let healthCount = 3;
+let x = 1;
+let questionIndex = 1;
+
 
 
 // Quiz array with dynamically generated questions, options, and correct answers
@@ -30,7 +33,12 @@ const quizArray = [];
 function generateQuestions(numQuestions) {
   const operations = ['*', '/', '+', '-']; // Array of operations
 
+
   for (let i = 0; i < numQuestions; i++) {
+    if (healthCount === 0) {
+      break;
+    }
+
     const operation = operations[Math.floor(Math.random() * operations.length)]; // Random operation
     let num1, num2, correctAnswer;
 
@@ -74,7 +82,7 @@ function generateChoices(correctAnswer) {
 
   // Shuffle the choices array to randomize the order
   shuffleArray(choices);
-
+  health();
   return choices;
 }
 
@@ -90,8 +98,6 @@ function shuffleArray(array) {
 for (let i = 0; i < quizArray.length; i++) {
   quizArray[i].options = generateChoices(parseInt(quizArray[i].correct));
 }
-
-
     const question = `What is ${num1} ${operation} ${num2}?`;
     const choices = generateChoices(correctAnswer);
 
@@ -105,24 +111,43 @@ for (let i = 0; i < quizArray.length; i++) {
   }
 }
 
-// Call the function to generate 5 random questions
-generateQuestions(5);
-
-
-
-//////////////////////////////////////////////////////////////////////////////////////////
-
 // if a question is incorret then the health count will decrease by 1
 const health = () => {
-  console.log("health");
+  console.log(healthCount);
   if (healthCount === 2) {
     document.getElementById("health3").style.display = "none";
   } else if (healthCount === 1) {
     document.getElementById("health2").style.display = "none";
   } else if (healthCount === 0) {
     document.getElementById("health1").style.display = "none";
+    endQuiz();
+    return;
   }
 };
+
+const endQuiz = () => {
+  // Hide question container and display score
+  displayContainer.classList.add("hide");
+  scoreContainer.classList.remove("hide");
+
+  // Calculate user score, grade, and time
+  const grade = calculateGrade(scoreCount);
+  const timeCount = calculateTimeResult();
+
+  userHighScore.textContent = `High Score: ${grade}`;
+  userScore.textContent = `Score: ${scoreCount}/${quizArray.length} (${grade})`;
+  userTime.textContent = `Time: ${timeCount}`;
+  questionCount = 0;
+};
+
+
+restartHealth = () => {
+  document.getElementById("health1").style.display = "inline-block";
+  document.getElementById("health2").style.display = "inline-block";
+  document.getElementById("health3").style.display = "inline-block";
+  healthCount = 3;
+};
+
 
 // Restart quiz
 const restartQuiz = () => {
@@ -144,6 +169,7 @@ nextBtn.addEventListener("click", () => {
   quizDisplay(questionCount);
   nextBtn.style.display = "none";
   timeLeft.textContent = "10s";
+  console.log(questionIndex)
 });
 
 // display the streak count only for a few seconds after a streak mark has been met
@@ -161,27 +187,16 @@ const streakDisplay = () => {
 
 const nextQuestion = () => {
 
-  if (questionCount === quizArray.length) {
-    // Hide question container and display score
-    displayContainer.classList.add("hide");
-    scoreContainer.classList.remove("hide");
-
-    // Calculate user score, grade, and time
-    const grade = calculateGrade(scoreCount);
-    const timeCount = calculateTimeResult();
-
-    userHighScore.textContent = `High Score: ${grade}`;
-    userScore.textContent = `Score: ${scoreCount}/${quizArray.length} (${grade})`;
-    userTime.textContent = `Time: ${timeCount}`;
-    questionCount = 0;
+  if (healthCount === 0) {
+    endQuiz();
 
   } else {
-
-    // countOfQuestion.textContent = `${questionCount + 1} of ${quizArray.length} Questions`;
-
+    questionIndex++;
+    generateQuestions(questionIndex);
     count = 10;
     clearInterval(countdown);
     timerDisplay();
+    quizDisplay(questionCount - 1);
   }
 };
 
@@ -220,8 +235,9 @@ const handleTimeout = () => {
   }
 
   streakCount = 0;
+  healthCount--;
   nextBtn.style.display = "block";
-
+  health();
   clearInterval(countdown);
 };
 
@@ -250,8 +266,6 @@ const quizCreator = () => {
 
     const div = document.createElement("div");
     div.classList.add("container__mid", "hide");
-
-    // countOfQuestion.textContent = `1 of ${quizArray.length} Question`;
 
     const questionDIV = document.createElement("p");
     questionDIV.classList.add("question");
@@ -300,6 +314,7 @@ const checker = (userOption) => {
     } else {
       streakCount = 0;
       healthCount--;
+      health();
       userOption.classList.add("incorrect", "selected");
 
       options.forEach((option) => {
@@ -310,18 +325,17 @@ const checker = (userOption) => {
         }
       });
     }
-   
   };
 
   options.forEach((element) => {
     element.disabled = true;
   });
 
-
-
   clearInterval(countdown);
   answerControl();
 };
+
+
 
 // Initial setup function
 const initial = () => {
@@ -334,8 +348,10 @@ const initial = () => {
   quizStartTime = Date.now();
   clearInterval(countdown);
   timerDisplay();
+  restartHealth();
   quizCreator();
   quizDisplay(questionCount);
+  generateQuestions(10);
 };
 
 // Calculate user grade based on score
