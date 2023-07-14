@@ -215,7 +215,7 @@ const quizCompletionTimer = () => {
   
     if (totalCompletionTime > 60) {
         const minutes = Math.floor(totalCompletionTime / 60);
-        const seconds = totalTime % 60;
+        const seconds = totalCompletionTime % 60;
 
         return `${minutes} minutes and ${seconds} seconds`;
     } else {
